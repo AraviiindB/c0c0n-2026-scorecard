@@ -14,12 +14,12 @@ Participant self-assessment for the c0c0n 2026 CISO working session **"Anatomy o
 
 ## Privacy
 
-- Answers, owners and target dates are stored only in the browser's local storage on the participant's device. The page loads nothing from other sites (no external scripts, fonts, images or trackers). Its Content-Security-Policy also stops the page's code from fetching or sending data.
+- Answers, owners and target dates are stored only in the browser's local storage on the participant's device. The page loads nothing from other sites (no external scripts, fonts, images or trackers). Its Content-Security-Policy also blocks the page's code from making network requests (fetch, XHR, WebSocket, beacons) or submitting forms.
 - Each participant gets a random code (for example `K7M-Q4X`) generated on the device. Participants can keep it or type their own, but should not use anything that identifies them.
-- Nothing is sent unless the participant chooses **Open pre-filled form** and then presses **Submit** in Microsoft Forms. The link to Forms carries the participant code, the optional profile and the ratings. Submitting adds them to the room dashboard. Owners, dates and the PDF are never sent.
+- Nothing is sent unless the participant chooses **Open pre-filled form**. That link takes the participant code, the optional profile and the ratings to Microsoft Forms, and they reach the room dashboard only when the participant presses **Submit** there. Owners, dates and the PDF are never sent to Microsoft Forms or the room dashboard; the PDF goes only where the participant saves or shares it.
 
 ## Notes
 
 The results are self-reported and are not an audit or certification. Controls, recommendations and timeframes draw on the "Breaking the Chain" research.
 
-This is a single static page. It bundles jsPDF and jsPDF-AutoTable (both MIT). jsPDF in turn embeds small components such as pako (MIT and Zlib). See `THIRD-PARTY-NOTICES.md` for the licences and `sbom.cdx.json` for the CycloneDX software bill of materials. Security design and vulnerability reporting are described in `SECURITY.md`.
+This is a single static page. It bundles jsPDF and jsPDF-AutoTable (both MIT). jsPDF in turn compiles in the npm packages fflate, fast-png and iobuffer (MIT) and pako (MIT and Zlib), plus a few smaller embedded components. See `THIRD-PARTY-NOTICES.md` for the licences and `sbom.cdx.json` for the CycloneDX software bill of materials, which includes the vulnerability (VEX) assessment. Security design and vulnerability reporting are described in `SECURITY.md`.

@@ -2,18 +2,18 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:391ecf5e-bb92-5243-901d-aa39fcd508de",
+  "serialNumber": "urn:uuid:ebf9f416-070c-5ade-b586-2d62b83e304a",
   "metadata": {
     "component": {
       "type": "application",
-      "bom-ref": "pkg:github/AraviiindB/c0c0n-2026-scorecard@1.1.0",
+      "bom-ref": "pkg:github/AraviiindB/c0c0n-2026-scorecard@1.1.1",
       "name": "c0c0n-2026-scorecard",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "Single-file supply-chain incident readiness scorecard (index.html)",
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "2c23ba6b644d1a738f5f9b60a17d34c00b72425c5988c2d7a9497f013faa1af6"
+          "content": "12d655dcc5ef5282e994cc368b96d3ca3edd022f30674cdff3dff8db8d40cd72"
         }
       ],
       "externalReferences": [
@@ -32,7 +32,7 @@
         {
           "type": "application",
           "name": "build_app.py",
-          "version": "1.1.0"
+          "version": "1.1.1"
         }
       ]
     }
@@ -77,15 +77,125 @@
       "components": [
         {
           "type": "library",
+          "bom-ref": "pkg:npm/fflate@0.8.1",
+          "name": "fflate",
+          "version": "0.8.1",
+          "purl": "pkg:npm/fflate@0.8.1",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ],
+          "description": "Compiled into jspdf.umd.min.js (identified from its source map; version as locked in jsPDF 4.2.1's package-lock.json)",
+          "externalReferences": [
+            {
+              "type": "distribution",
+              "url": "https://registry.npmjs.org/fflate/-/fflate-0.8.1.tgz",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "fdec4ebc4b9cfbf89a526d74e502223ade0ba4174c4d6b17c6a4741c3177e6fc777e668acf0ef7e788138a50a1e6b93312df166321bffe4bb78779d199dec21d"
+                }
+              ]
+            },
+            {
+              "type": "vcs",
+              "url": "https://github.com/101arrowz/fflate"
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "bom-ref": "pkg:npm/fast-png@6.4.0",
+          "name": "fast-png",
+          "version": "6.4.0",
+          "purl": "pkg:npm/fast-png@6.4.0",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ],
+          "description": "Compiled into jspdf.umd.min.js (identified from its source map; version as locked in jsPDF 4.2.1's package-lock.json)",
+          "externalReferences": [
+            {
+              "type": "distribution",
+              "url": "https://registry.npmjs.org/fast-png/-/fast-png-6.4.0.tgz",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "900a99ab54e58018d970baf999c37a34fe51bf85767f6db3d3473783cbd1af091caa37abc7b04484f6ce9d608fa9a1d49765d6401250bce4ff15085d313ed7fd"
+                }
+              ]
+            },
+            {
+              "type": "vcs",
+              "url": "https://github.com/image-js/fast-png"
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "bom-ref": "pkg:npm/iobuffer@5.4.0",
+          "name": "iobuffer",
+          "version": "5.4.0",
+          "purl": "pkg:npm/iobuffer@5.4.0",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ],
+          "description": "Compiled into jspdf.umd.min.js (identified from its source map; version as locked in jsPDF 4.2.1's package-lock.json)",
+          "externalReferences": [
+            {
+              "type": "distribution",
+              "url": "https://registry.npmjs.org/iobuffer/-/iobuffer-5.4.0.tgz",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "0d179b396baa0efc6e9df90d24095cdc8cd620f0f9c55c7050d6c7afbc4a07c13a68b27120f7cd5f70a83098217058e9bfa45642cadc25b821b44c123e826a30"
+                }
+              ]
+            },
+            {
+              "type": "vcs",
+              "url": "https://github.com/image-js/iobuffer"
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "bom-ref": "pkg:npm/pako@2.1.0",
           "name": "pako",
+          "version": "2.1.0",
+          "purl": "pkg:npm/pako@2.1.0",
           "licenses": [
             {
               "expression": "MIT AND Zlib"
             }
           ],
-          "version": "2.1.0",
-          "purl": "pkg:npm/pako@2.1.0",
-          "bom-ref": "pkg:npm/pako@2.1.0"
+          "description": "Compiled into jspdf.umd.min.js (identified from its source map; version as locked in jsPDF 4.2.1's package-lock.json)",
+          "externalReferences": [
+            {
+              "type": "distribution",
+              "url": "https://registry.npmjs.org/pako/-/pako-2.1.0.tgz",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "c3e7ae7e26755ae25880f5db57f3cedcd08c11cdf1ab2964287ce9f1bc69d6e5b8a9a48d41493098b2c473790ab1fcfc96957517c1eddd4d429bef52ae8836ba"
+                }
+              ]
+            },
+            {
+              "type": "vcs",
+              "url": "https://github.com/nodeca/pako"
+            }
+          ]
         },
         {
           "type": "library",
@@ -111,11 +221,42 @@
         },
         {
           "type": "library",
-          "name": "WebP decoder (libwebp port, Dominik Homberger)",
+          "name": "WebP decoder (Google libwebp port, Dominik Homberger)",
+          "licenses": [
+            {
+              "expression": "BSD-3-Clause AND MIT"
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "BMP decoder (shaozilee)",
+          "licenses": [
+            {
+              "license": {
+                "name": "LicenseRef-no-license-specified"
+              }
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "FileSaver.js (Eli Grey)",
           "licenses": [
             {
               "license": {
                 "id": "MIT"
+              }
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "RGB colour parser (Stoyan Stefanov)",
+          "licenses": [
+            {
+              "license": {
+                "name": "LicenseRef-use-it-if-you-like-it"
               }
             }
           ]
@@ -206,10 +347,86 @@
   ],
   "dependencies": [
     {
-      "ref": "pkg:github/AraviiindB/c0c0n-2026-scorecard@1.1.0",
+      "ref": "pkg:github/AraviiindB/c0c0n-2026-scorecard@1.1.1",
       "dependsOn": [
         "pkg:npm/jspdf@4.2.1",
         "pkg:npm/jspdf-autotable@5.0.8"
+      ]
+    },
+    {
+      "ref": "pkg:npm/jspdf@4.2.1",
+      "dependsOn": [
+        "pkg:npm/fflate@0.8.1",
+        "pkg:npm/fast-png@6.4.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/jspdf-autotable@5.0.8",
+      "dependsOn": [
+        "pkg:npm/jspdf@4.2.1"
+      ]
+    },
+    {
+      "ref": "pkg:npm/fflate@0.8.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/fast-png@6.4.0",
+      "dependsOn": [
+        "pkg:npm/iobuffer@5.4.0",
+        "pkg:npm/pako@2.1.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/iobuffer@5.4.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/pako@2.1.0",
+      "dependsOn": []
+    }
+  ],
+  "vulnerabilities": [
+    {
+      "bom-ref": "vex:CVE-2026-45820",
+      "id": "CVE-2026-45820",
+      "source": {
+        "name": "GitHub Advisory Database",
+        "url": "https://github.com/advisories/GHSA-px8p-9vwx-vf98"
+      },
+      "references": [
+        {
+          "id": "GHSA-px8p-9vwx-vf98",
+          "source": {
+            "name": "GitHub Advisory Database",
+            "url": "https://github.com/advisories/GHSA-px8p-9vwx-vf98"
+          }
+        }
+      ],
+      "ratings": [
+        {
+          "source": {
+            "name": "GitHub Advisory Database"
+          },
+          "severity": "medium"
+        }
+      ],
+      "description": "fflate unzipSync can enter an infinite loop when parsing malformed ZIP64 archives (denial of service; fixed in fflate 0.8.3).",
+      "advisories": [
+        {
+          "title": "GHSA-px8p-9vwx-vf98",
+          "url": "https://github.com/advisories/GHSA-px8p-9vwx-vf98"
+        }
+      ],
+      "analysis": {
+        "state": "not_affected",
+        "justification": "code_not_present",
+        "detail": "jsPDF 4.2.1 compiles in only fflate's zlib compression code. unzipSync and the ZIP/ZIP64 reader are not in jspdf.umd.min.js: the build checks that none of fflate's ZIP signatures or ZIP error message occur in it. The app never reads ZIP files."
+      },
+      "affects": [
+        {
+          "ref": "pkg:npm/fflate@0.8.1"
+        }
       ]
     }
   ]

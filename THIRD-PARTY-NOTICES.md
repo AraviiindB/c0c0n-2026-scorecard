@@ -1,6 +1,6 @@
 # Third-party notices
 
-`index.html` bundles the two open-source libraries below, unmodified apart from removing the `sourceMappingURL` comment. Both are verified at build time against their npm registry integrity (see `sbom.cdx.json`).
+`index.html` bundles the two open-source libraries below. Each is the file published on npm, unchanged apart from removing the `//# sourceMappingURL` comment at its end. Every build checks both npm tarballs against pinned registry `sha512` integrity values (see `sbom.cdx.json`).
 
 ## jsPDF 4.2.1 (MIT)
 
@@ -60,14 +60,155 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## Components bundled inside jsPDF
+## npm packages compiled into jsPDF
 
-jsPDF's distribution embeds the following components. Their licence and copyright notices are reproduced below exactly as retained in the shipped `jspdf.umd.min.js` (and therefore also inside `index.html`).
+jsPDF's `jspdf.umd.min.js` contains code from the npm packages below. They were identified from its source map, at the versions locked in jsPDF 4.2.1's `package-lock.json`. The licence texts are copied from the npm tarballs, which the build checks against pinned registry `sha512` integrity values.
 
-- pako 2.1.0: MIT AND Zlib
+### fflate 0.8.1 (MIT)
+
+https://github.com/101arrowz/fflate
+
+```
+MIT License
+
+Copyright (c) 2023 Arjun Barrett
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+### fast-png 6.4.0 (MIT)
+
+https://github.com/image-js/fast-png
+
+```
+MIT License
+
+Copyright (c) 2015 Michaël Zasso
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+### iobuffer 5.4.0 (MIT)
+
+https://github.com/image-js/iobuffer
+
+```
+The MIT License (MIT)
+
+Copyright (c) 2015 Michaël Zasso
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+### pako 2.1.0 (MIT AND Zlib)
+
+https://github.com/nodeca/pako
+
+```
+(The MIT License)
+
+Copyright (C) 2014-2017 by Vitaly Puzrin and Andrei Tuputcyn
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+```
+
+zlib licence notice, as carried in pako's source:
+
+```
+(C) 1995-2013 Jean-loup Gailly and Mark Adler
+(C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not
+  claim that you wrote the original software. If you use this software
+  in a product, an acknowledgment in the product documentation would be
+  appreciated but is not required.
+2. Altered source versions must be plainly marked as such, and must not be
+  misrepresented as being the original software.
+3. This notice may not be removed or altered from any source distribution.
+```
+
+## Other components embedded in jsPDF
+
+jsPDF's distribution also embeds the following components. Their licence and copyright notices follow: first exactly as retained in the shipped `jspdf.umd.min.js` (and therefore also inside `index.html`), then the original headers that minification removed.
+
 - omggif (GIF decoder, Dean McNamee): MIT
 - JPEG encoder (Adobe as3corelib port): BSD-3-Clause
-- WebP decoder (libwebp port, Dominik Homberger): MIT
+- WebP decoder (Google libwebp port, Dominik Homberger): BSD-3-Clause AND MIT
+- BMP decoder (shaozilee): no license specified
+- FileSaver.js (Eli Grey): MIT
+- RGB colour parser (Stoyan Stefanov): use it if you like it
 - Unicode bidi engine (Alex Shensis): MIT
 - MD5 (Joseph Myers): no license specified
 - PDF encryption (FPDF script 37 port): FPDF permissive
@@ -484,4 +625,74 @@ jsPDF's distribution embeds the following components. Their licence and copyrigh
  *               http://opensource.org/licenses/mit-license
  *
  */
+```
+
+### Headers of jspdf's embedded libraries that minification removed (4)
+
+Taken from the original sources recorded in its source map (`jspdf.umd.min.js.map`, inside the verified npm tarball).
+
+`src/libs/FileSaver.js`
+
+```
+/**
+ * @license
+ * FileSaver.js
+ * A saveAs() FileSaver implementation.
+ *
+ * By Eli Grey, http://eligrey.com
+ *
+ * License : https://github.com/eligrey/FileSaver.js/blob/master/LICENSE.md (MIT)
+ * source  : http://purl.eligrey.com/github/FileSaver.js
+ */
+```
+
+`src/libs/BMPDecoder.js`
+
+```
+/**
+ * @author shaozilee
+ *
+ * Bmp format decoder,support 1bit 4bit 8bit 24bit bmp
+ *
+ */
+```
+
+`src/libs/BMPDecoder.js`
+
+```
+/**
+ * add 32bit decode func
+ * @author soubok
+ */
+```
+
+`src/libs/WebPDecoder.js`
+
+```
+/** @license
+   * Copyright 2011 Google Inc.
+   *
+   * This code is licensed under the same terms as WebM:
+   *  Software License Agreement:  http://www.webmproject.org/license/software/
+   *  Additional IP Rights Grant:  http://www.webmproject.org/license/additional/
+   * -----------------------------------------------------------------------------
+   *
+   * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+   * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+   * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+   * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+   * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+   * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+   * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
+   * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+   * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+   * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+   *
+   * -----------------------------------------------------------------------------
+   *
+   * Copyright 2011-2017 Dominik Homberger
+   * Libwebp Javascript / libwebpjs - the libwebp implementation in javascript (v0.6.0)
+   *
+   * Author: Dominik Homberger (dominik.homberger@gmail.com)
+   */
 ```
