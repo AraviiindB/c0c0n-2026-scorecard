@@ -1,0 +1,8 @@
+# OSV-Scanner, and the OpenSSF Scorecard "Vulnerabilities" check that uses it,
+# read this file. It repeats the VEX statement in sbom.cdx.json for tools that
+# do not read VEX. The exception expires so that it is reviewed again.
+
+[[IgnoredVulns]]
+id = "GHSA-px8p-9vwx-vf98"
+ignoreUntil = 2027-04-07
+reason = "CVE-2026-45820 (denial of service in fflate's ZIP64 reader) does not affect this app: code not present. jsPDF 4.2.1 compiles in only fflate's zlib compression code; unzipSync and the ZIP/ZIP64 reader are not in index.html (the build fails if they appear), and the app never reads ZIP files. See the VEX statement in sbom.cdx.json."
