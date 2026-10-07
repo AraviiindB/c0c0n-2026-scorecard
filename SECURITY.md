@@ -23,7 +23,7 @@ Please do not post security problems in public. We aim to acknowledge reports wi
 
 ## Room dashboard
 
-The scores and the PDF that participants see are calculated on their own devices, so other people cannot change them. The facilitators' room dashboard (an Excel workbook linked to Microsoft Forms) shows self-reported, combined results. It is a discussion aid, not a measurement. Microsoft Forms cannot limit who submits or check the submitted values, so anyone with the form link can add made-up answers. The facilitators therefore review the submissions before they discuss the numbers.
+The scores and the PDF that participants see are calculated on their own devices, so other people cannot change them. The facilitators' room dashboard (an Excel workbook linked to Microsoft Forms) shows self-reported, combined results. It is a discussion aid, not a measurement. Microsoft Forms cannot limit who submits or check the submitted values, so anyone with the form link can add made-up answers. The facilitators therefore review the submissions before they discuss the numbers. The workbook counts only responses inside the session's response-ID window (less any IDs the facilitators exclude) and uses the latest response for each participant code. It shows malformed codes as placeholders, scores each answer by its leading symbol (✓, ◐ or ✗) and counts anything else as *Unknown*, and reports unexpected profile values as *(not given)*. Room results appear only once five participants are included, and averages for a sector, size or role only for groups of at least five.
 
 ## Known platform limitations
 
