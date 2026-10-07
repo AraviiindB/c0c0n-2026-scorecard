@@ -14,11 +14,12 @@ Participant self-assessment for the c0c0n 2026 CISO working session **"Anatomy o
 
 ## Privacy
 
-- Answers are stored only in the browser's local storage on the participant's device. The page loads no external scripts, fonts or trackers, and its Content-Security-Policy blocks network requests.
-- Nothing is sent unless the participant chooses **Open pre-filled form** and then presses **Submit** in Microsoft Forms. That submission adds the participant code, optional profile and ratings to the room dashboard. Owners, dates and the PDF are never sent.
+- Answers, owners and target dates are stored only in the browser's local storage on the participant's device. The page loads nothing from other sites (no external scripts, fonts, images or trackers). Its Content-Security-Policy also stops the page's code from fetching or sending data.
+- Each participant gets a random code (for example `K7M-Q4X`) generated on the device. Participants can keep it or type their own, but should not use anything that identifies them.
+- Nothing is sent unless the participant chooses **Open pre-filled form** and then presses **Submit** in Microsoft Forms. The link to Forms carries the participant code, the optional profile and the ratings. Submitting adds them to the room dashboard. Owners, dates and the PDF are never sent.
 
 ## Notes
 
 The results are self-reported and are not an audit or certification. Controls, recommendations and timeframes draw on the "Breaking the Chain" research.
 
-This is a single static page. It bundles jsPDF and jsPDF-AutoTable, both under the MIT licence; see `THIRD-PARTY-NOTICES.md`.
+This is a single static page. It bundles jsPDF and jsPDF-AutoTable (both MIT). jsPDF in turn embeds small components such as pako (MIT and Zlib). See `THIRD-PARTY-NOTICES.md` for the licences and `sbom.cdx.json` for the CycloneDX software bill of materials. Security design and vulnerability reporting are described in `SECURITY.md`.

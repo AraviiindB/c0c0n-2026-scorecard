@@ -1,0 +1,216 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "version": 1,
+  "serialNumber": "urn:uuid:391ecf5e-bb92-5243-901d-aa39fcd508de",
+  "metadata": {
+    "component": {
+      "type": "application",
+      "bom-ref": "pkg:github/AraviiindB/c0c0n-2026-scorecard@1.1.0",
+      "name": "c0c0n-2026-scorecard",
+      "version": "1.1.0",
+      "description": "Single-file supply-chain incident readiness scorecard (index.html)",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "2c23ba6b644d1a738f5f9b60a17d34c00b72425c5988c2d7a9497f013faa1af6"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://araviiindb.github.io/c0c0n-2026-scorecard/"
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/AraviiindB/c0c0n-2026-scorecard"
+        }
+      ]
+    },
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "name": "build_app.py",
+          "version": "1.1.0"
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/jspdf@4.2.1",
+      "name": "jspdf",
+      "version": "4.2.1",
+      "purl": "pkg:npm/jspdf@4.2.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "e6551fcdc32f09d6853b2c5126d18d01d9447e0da618a41a11ebeee0f6c20d54"
+        }
+      ],
+      "description": "Shipped file: dist/jspdf.umd.min.js (hash is of the npm-published file)",
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/jspdf/-/jspdf-4.2.1.tgz",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "632017caf9e68d36d1e1b1d044bcdec770ae20d0839509c1aa8498ca32704cfdb1f630cbb8a0f3cbb68a525d21831dee85c97bc73837d9a827e6f9627ba1c895"
+            }
+          ]
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/parallax/jsPDF"
+        }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "pako",
+          "licenses": [
+            {
+              "expression": "MIT AND Zlib"
+            }
+          ],
+          "version": "2.1.0",
+          "purl": "pkg:npm/pako@2.1.0",
+          "bom-ref": "pkg:npm/pako@2.1.0"
+        },
+        {
+          "type": "library",
+          "name": "omggif (GIF decoder, Dean McNamee)",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "JPEG encoder (Adobe as3corelib port)",
+          "licenses": [
+            {
+              "license": {
+                "id": "BSD-3-Clause"
+              }
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "WebP decoder (libwebp port, Dominik Homberger)",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "Unicode bidi engine (Alex Shensis)",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "MD5 (Joseph Myers)",
+          "licenses": [
+            {
+              "license": {
+                "name": "LicenseRef-no-license-specified"
+              }
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "PDF encryption (FPDF script 37 port)",
+          "licenses": [
+            {
+              "license": {
+                "name": "LicenseRef-FPDF-permissive"
+              }
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "Standard 14 font metrics (Adobe AFM)",
+          "licenses": [
+            {
+              "license": {
+                "name": "LicenseRef-Adobe-AFM"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/jspdf-autotable@5.0.8",
+      "name": "jspdf-autotable",
+      "version": "5.0.8",
+      "purl": "pkg:npm/jspdf-autotable@5.0.8",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a65dff2c6a8296b16aff24e69f7683cd7dbaed4a4ec26b507d6840ee27d54649"
+        }
+      ],
+      "description": "Shipped file: dist/jspdf.plugin.autotable.min.js (hash is of the npm-published file)",
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/jspdf-autotable/-/jspdf-autotable-5.0.8.tgz",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "1f2d3937ceb204eec25c1ae748b3a07bb8b5658a4a1f60e343de22c9b68feef0614889e3bd10600dcf7d9e02b349b48ef0973df1909a965cbc23a9f4b63d9125"
+            }
+          ]
+        },
+        {
+          "type": "vcs",
+          "url": "https://github.com/simonbengtsson/jsPDF-AutoTable"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "pkg:github/AraviiindB/c0c0n-2026-scorecard@1.1.0",
+      "dependsOn": [
+        "pkg:npm/jspdf@4.2.1",
+        "pkg:npm/jspdf-autotable@5.0.8"
+      ]
+    }
+  ]
+}
