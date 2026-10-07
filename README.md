@@ -14,7 +14,7 @@ Participant self-assessment for the c0c0n 2026 CISO working session **"Anatomy o
 
 ## Privacy
 
-- Answers, owners and target dates are stored only in the browser's local storage on the participant's device. The page loads nothing from other sites (no external scripts, fonts, images or trackers). Its Content-Security-Policy also blocks the page's code from making network requests (fetch, XHR, WebSocket, beacons) or submitting forms.
+- Answers, owners and target dates are stored only in the browser's local storage on the participant's device. The page loads nothing from other sites (no external scripts, fonts, images or trackers). Its Content-Security-Policy also blocks fetch, XHR, WebSocket, EventSource, beacon and ping requests and form submissions from the page. No CSP can block every channel; `SECURITY.md` explains the limits and the other protections.
 - Each participant gets a random code (for example `K7M-Q4X`) generated on the device. Participants can keep it or type their own, but should not use anything that identifies them.
 - Nothing is sent unless the participant chooses **Open pre-filled form**. That link takes the participant code, the optional profile and the ratings to Microsoft Forms, and they reach the room dashboard only when the participant presses **Submit** there. Owners, dates and the PDF are never sent to Microsoft Forms or the room dashboard; the PDF goes only where the participant saves or shares it.
 
