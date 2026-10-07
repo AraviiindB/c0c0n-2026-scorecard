@@ -7,10 +7,11 @@ Participant self-assessment for the c0c0n 2026 CISO working session **"Anatomy o
 
 ## What it does
 
-- 40 controls in 4 weighted areas: Secure by default (30%), Preventive controls (25%), Detective capabilities (25%) and Incident-response readiness (20%).
+- Walks participants through **one unfolding supply-chain incident in 6 scenarios**: a poisoned npm package, a hijacked CI action, a compromised developer laptop, attackers publishing as you, the credential-containment race, and recovery. Each scenario ends with the questions it raises, and each question has a short explainer (for example, what an SBOM is).
+- 40 controls, each asked once in the scenario where it matters, and scored in 4 weighted areas: Secure by default (30%), Preventive controls (25%), Detective capabilities (25%) and Incident-response readiness (20%).
 - Each control is rated Implemented (1), Partial (0.5), Not implemented (0) or Unknown (0, reported as uncertainty).
 - Shows area and overall scores out of 100, interpretation bands, critical gaps, uncertainty, the lowest-scoring area and a priority action plan.
-- Builds a detailed PDF report **on the participant's device**. It contains every answer by section, the scores, findings, recommendations, suggested owners, roadmap timeframes and an action plan.
+- Builds a detailed PDF report **on the participant's device**. It contains the scores, findings, recommendations, suggested owners, roadmap timeframes, an action plan, the incident scenarios, and every question as asked with the participant's answer, grouped by area.
 
 ## Privacy
 
