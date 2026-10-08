@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow">
+<title>c0c0n 2026 · Session dashboard</title>
+<style>
+:root { --navy: #1F3864; --navy2: #2C4F8A; --ink: #1d2433; --muted: #5b6475; --line: #dde3ee; --bg: #f3f6fb;
+  --b0: #D32F2F; --b1: #F57C00; --b2: #FBC02D; --b3: #388E3C; --l0: #F8D7DA; --l1: #FFE5CC; --l2: #FFF4C2; --l3: #D4EDDA;
+  --y: #2E7D32; --p: #E65100; --n: #C62828; --u: #78909C; }
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { font: 16px/1.35 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: var(--ink); background: var(--bg);
+  font-size: clamp(14px, 1.05vw, 22px); }
+.top { display: flex; align-items: center; gap: 1.2em; background: var(--navy); color: #fff; padding: .6em 1.2em; }
+.brand { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.brand .k { font-size: .72em; letter-spacing: .06em; text-transform: uppercase; opacity: .85; }
+.brand b { font-size: 1.15em; }
+.tabs { display: flex; gap: .4em; }
+.tabs button { font: inherit; font-weight: 700; border: 2px solid #fff; background: transparent; color: #fff; border-radius: 999px;
+  padding: .35em 1em; cursor: pointer; }
+.tabs button[aria-selected="true"] { background: #fff; color: var(--navy); }
+.st { font-size: .8em; text-align: right; min-width: 12em; opacity: .9; }
+.st.bad { color: #FFCDD2; opacity: 1; font-weight: 700; }
+main { padding: 1em 1.2em; }
+.card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: .9em 1.1em; margin: 0 0 1em; }
+h2 { margin: 0 0 .5em; font-size: 1.05em; color: var(--navy); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); }
+.small { font-size: .85em; }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1em; margin: 0 0 1em; }
+.tile { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: .8em 1em; }
+.tile .v { font-size: 3.4em; font-weight: 800; color: var(--navy); line-height: 1.05; }
+.tile .l { color: var(--muted); font-weight: 600; }
+.tile.hl { border: 3px solid var(--y); }
+.tile.hl .v { color: var(--y); }
+.rows { display: grid; gap: .45em; }
+.r { display: grid; grid-template-columns: minmax(10em, 22em) 1fr 3.2em; gap: .8em; align-items: center; }
+.r .lab { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.r .num { text-align: right; font-weight: 800; font-size: 1.15em; color: var(--navy); }
+.bar { height: 1.15em; background: #e8edf5; border-radius: 999px; overflow: hidden; display: flex; }
+.bar i { display: block; height: 100%; background: var(--navy2); }
+.bar i.done { background: var(--y); }
+.bar i.Y { background: var(--y); } .bar i.P { background: var(--p); } .bar i.N { background: var(--n); } .bar i.U { background: var(--u); }
+.bar i.b0 { background: var(--b0); } .bar i.b1 { background: var(--b1); } .bar i.b2 { background: var(--b2); } .bar i.b3 { background: var(--b3); }
+.foot { display: flex; gap: 2em; flex-wrap: wrap; color: var(--muted); font-size: .9em; }
+.grid2 { display: grid; grid-template-columns: 1fr 1.25fr; gap: 1em; }
+.big { display: flex; align-items: baseline; gap: .4em; }
+.big .v { font-size: 4.6em; font-weight: 800; line-height: 1; color: var(--navy); }
+.big .o { font-size: 1.4em; color: var(--muted); font-weight: 700; }
+.pill { display: inline-block; font-weight: 700; border-radius: 999px; padding: .15em .7em; font-size: .9em; }
+.pill.b0 { background: var(--l0); color: #8E1B1B; } .pill.b1 { background: var(--l1); color: #8A3B00; }
+.pill.b2 { background: var(--l2); color: #6B5200; } .pill.b3 { background: var(--l3); color: #1E5B25; }
+.area { display: grid; grid-template-columns: minmax(9em, 14em) 1fr 3.2em minmax(9em, 13em); gap: .7em; align-items: center; margin: .35em 0; }
+.area .lab b { display: block; } .area .lab span { font-size: .8em; color: var(--muted); }
+.area .num { font-weight: 800; font-size: 1.3em; text-align: right; }
+.bands { display: grid; grid-template-columns: repeat(4, 1fr); gap: .6em; }
+.bands div { border-radius: 12px; padding: .5em .7em; }
+.bands b { display: block; font-size: 2em; line-height: 1.1; }
+.bands .b0 { background: var(--l0); } .bands .b1 { background: var(--l1); } .bands .b2 { background: var(--l2); } .bands .b3 { background: var(--l3); }
+.hist { display: grid; grid-template-columns: repeat(10, 1fr); gap: .35em; align-items: end; height: 7em; }
+.hist div { display: flex; flex-direction: column; justify-content: flex-end; height: 100%; text-align: center; font-size: .75em; }
+.hist i { display: block; background: var(--navy2); border-radius: 6px 6px 0 0; min-height: 2px; }
+.hist .x { color: var(--muted); }
+.gap { display: grid; grid-template-columns: 4.2em 1fr; gap: .2em .7em; margin: .5em 0; align-items: center; }
+.gap .c { font-weight: 800; color: var(--navy2); }
+.gap .t { font-weight: 600; }
+.gap .bar { grid-column: 2; height: 1em; }
+.crit { color: var(--n); font-weight: 700; font-size: .8em; margin-left: .4em; }
+.legend { display: flex; gap: 1.2em; font-size: .8em; color: var(--muted); margin: .2em 0 .4em; }
+.legend i { display: inline-block; width: .8em; height: .8em; border-radius: 3px; margin-right: .3em; vertical-align: -.05em; }
+.legend .Y { background: var(--y); } .legend .P { background: var(--p); } .legend .N { background: var(--n); } .legend .U { background: var(--u); }
+.ribbon { background: #FFF4C2; border: 1px solid #F0D264; border-radius: 10px; padding: .4em .8em; margin: 0 0 1em; font-weight: 700; }
+.wait { text-align: center; padding: 3em 1em; }
+.wait .v { font-size: 5em; font-weight: 800; color: var(--navy); }
+#keybox { max-width: 34em; margin: 3em auto; }
+#keybox input { font: inherit; width: 100%; padding: .6em .8em; border: 1.5px solid var(--line); border-radius: 10px; margin: .4em 0 .8em; }
+#keybox button { font: inherit; font-weight: 700; border: 0; border-radius: 10px; background: var(--navy); color: #fff; padding: .6em 1.4em; cursor: pointer; }
+.err { color: var(--n); font-weight: 600; }
+.cols3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; }
+@media (max-width: 900px) { .tiles, .grid2, .cols3, .bands { grid-template-columns: 1fr 1fr; } .area { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="k">c0c0n 2026 · CISO working session · facilitators</span><b>Anatomy of a Software Supply Chain Incident</b></div>
+  <nav class="tabs" role="tablist" aria-label="Views">
+    <button type="button" id="t-prog" role="tab" aria-controls="v-prog" aria-selected="true">1 · Live progress</button>
+    <button type="button" id="t-res" role="tab" aria-controls="v-res" aria-selected="false">2 · Room results</button>
+  </nav>
+  <div class="st" id="status" role="status">Starting</div>
+</header>
+<main>
+  <section id="keybox" class="card" hidden>
+    <h2>Facilitator key</h2>
+    <p class="small muted">Open the dashboard shortcut from the facilitator kit, or paste the facilitator key. It is kept only in this browser tab.</p>
+    <input type="password" id="kin" autocomplete="off" spellcheck="false" aria-label="Facilitator key">
+    <button type="button" id="kgo">Open dashboard</button>
+    <p class="err" id="kerr" role="alert"></p>
+  </section>
+  <section id="v-prog" role="tabpanel" aria-labelledby="t-prog" hidden></section>
+  <section id="v-res" role="tabpanel" aria-labelledby="t-res" hidden></section>
+</main>
+<script>
+(function () {
+  "use strict";
+  var STORE = "c0c0n26-dash-key", KEY_RE = /^[A-Za-z0-9_-]{16,128}$/;
+  var key = "", tab = "prog", data = null, fails = 0, timer = null;
+  function $(id) { return document.getElementById(id); }
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined && text !== null) e.textContent = String(text);
+    return e;
+  }
+  function add(parent) { for (var i = 1; i < arguments.length; i++) if (arguments[i]) parent.appendChild(arguments[i]); return parent; }
+  function clear(n) { while (n.firstChild) n.removeChild(n.firstChild); }
+  function num(v) { return typeof v === "number" && isFinite(v) ? v : 0; }
+  function width(i, pct) { i.style.width = Math.max(0, Math.min(100, num(pct))) + "%"; return i; }
+  function bar(pct, cls) { return add(el("div", "bar"), width(el("i", cls), pct)); }
+  function stack(pct) {
+    var b = el("div", "bar");
+    ["Y", "P", "N", "U"].forEach(function (L) { b.appendChild(width(el("i", L), pct && pct[L])); });
+    return b;
+  }
+  function pill(i, names) { return el("span", "pill b" + i, names[i] || ""); }
+
+  try {
+    var m = /(?:^#|&)k=([A-Za-z0-9_-]{16,128})(?:&|$)/.exec(location.hash || "");
+    if (m) sessionStorage.setItem(STORE, m[1]);
+    key = sessionStorage.getItem(STORE) || "";
+  } catch (e) { key = ""; }
+  if (location.hash) history.replaceState(null, "", location.pathname);
+
+  function status(text, bad) { var s = $("status"); s.textContent = text; s.className = bad ? "st bad" : "st"; }
+  function showTab(t) {
+    tab = t;
+    $("t-prog").setAttribute("aria-selected", String(t === "prog"));
+    $("t-res").setAttribute("aria-selected", String(t === "res"));
+    $("v-prog").hidden = !key || t !== "prog";
+    $("v-res").hidden = !key || t !== "res";
+  }
+  function askKey(msg) {
+    key = "";
+    try { sessionStorage.removeItem(STORE); } catch (e) { /* ignore */ }
+    $("keybox").hidden = false; $("v-prog").hidden = true; $("v-res").hidden = true;
+    $("kerr").textContent = msg || "";
+    status("Key needed", true);
+    $("kin").focus();
+  }
+  $("kgo").addEventListener("click", function () {
+    var v = $("kin").value.trim();
+    if (!KEY_RE.test(v)) { $("kerr").textContent = "That does not look like a facilitator key."; return; }
+    key = v; $("kin").value = "";
+    try { sessionStorage.setItem(STORE, v); } catch (e) { /* ignore */ }
+    $("keybox").hidden = true; showTab(tab); poll();
+  });
+  $("kin").addEventListener("keydown", function (e) { if (e.key === "Enter") $("kgo").click(); });
+  $("t-prog").addEventListener("click", function () { showTab("prog"); });
+  $("t-res").addEventListener("click", function () { showTab("res"); });
+  document.addEventListener("keydown", function (e) {
+    if (e.target && e.target.tagName === "INPUT") return;
+    if (e.key === "1") showTab("prog");
+    else if (e.key === "2") showTab("res");
+    else if (e.key === "f" || e.key === "F") {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+    }
+  });
+
+  function tile(v, label, cls) { return add(el("div", "tile" + (cls ? " " + cls : "")), el("div", "v", v), el("div", "l", label)); }
+
+  function renderProgress(d) {
+    var p = d.progress || {}, st = p.stages || [], names = d.stageNames || [], root = $("v-prog");
+    clear(root);
+    add(root, add(el("div", "tiles"), tile(num(p.devices), "Devices started"), tile(num(p.inProgress), "Answering now"),
+      tile(num(p.completed), "Finished and received", "hl"), tile(num(p.activeRecent), "Active in the last 15 minutes")));
+    var max = 1;
+    st.forEach(function (n) { max = Math.max(max, num(n)); });
+    var rows = el("div", "rows");
+    st.forEach(function (n, i) {
+      add(rows, add(el("div", "r"), el("div", "lab", names[i] || "Stage " + i), bar(num(n) * 100 / max), el("div", "num", num(n))));
+    });
+    add(rows, add(el("div", "r"), el("div", "lab", "Finished and received"),
+      bar(num(p.completed) * 100 / Math.max(max, num(p.completed)), "done"), el("div", "num", num(p.completed))));
+    add(root, add(el("div", "card"), el("h2", null, "Where everyone is now"), rows));
+    var r = d.relay || {};
+    add(root, add(el("div", "foot"),
+      el("span", null, "Microsoft Forms copy: " + num(r.sent) + " sent, " + (num(r.pending) + num(r.sending)) + " queued" +
+        (num(r.failed) ? ", " + num(r.failed) + " failed" : "")),
+      el("span", null, d.open ? "Submissions open" : "Submissions closed"),
+      d.testOnly ? el("span", null, "Test submissions only") : null,
+      d.testHidden ? el("span", null, d.testHidden + " test submissions hidden") : null,
+      d.truncated ? el("span", "err", "Row limit reached") : null));
+  }
+
+  function renderResults(d) {
+    var root = $("v-res"), names = d.bandNames || [];
+    clear(root);
+    if (d.testOnly) add(root, el("div", "ribbon", "Showing test submissions only. They disappear once real responses arrive."));
+    if (num(d.n) < num(d.minRoom)) {
+      add(root, add(el("div", "card wait"), el("div", "v", num(d.n)),
+        el("p", null, "participants finished so far. Room results appear once " + num(d.minRoom) + " have finished.")));
+      return;
+    }
+    var o = d.overall || {};
+    var left = add(el("div", "card"), el("h2", null, "Room readiness, " + num(d.n) + " participants"),
+      add(el("div", "big"), el("span", "v", num(o.mean)), el("span", "o", "/ 100"), pill(num(d.band), names)),
+      el("p", "small muted", "Average of participants' overall scores. Median " + o.median + ", range " + num(o.min) +
+        " to " + num(o.max) + ". Average uncertainty " + num(d.unc) + "% of control weight."));
+    (d.areas || []).forEach(function (a) {
+      add(left, add(el("div", "area"), add(el("div", "lab"), el("b", null, a.name), el("span", null, a.weight + "% of overall")),
+        bar(a.mean, "b" + num(a.band)), el("div", "num", num(a.mean)), add(el("div"), pill(num(a.band), names))));
+    });
+    var gaps = add(el("div", "card"), el("h2", null, "Biggest gaps in the room"),
+      add(el("div", "legend"), add(el("span"), el("i", "Y"), document.createTextNode("Implemented")),
+        add(el("span"), el("i", "P"), document.createTextNode("Partial")),
+        add(el("span"), el("i", "N"), document.createTextNode("Not implemented")),
+        add(el("span"), el("i", "U"), document.createTextNode("Unknown"))));
+    (d.topGaps || []).forEach(function (g) {
+      var t = add(el("div", "t", g.short), g.critical ? el("span", "crit", "CRITICAL") : null);
+      add(gaps, add(el("div", "gap"), el("div", "c", g.code), t, stack(g.pct)));
+    });
+    add(root, add(el("div", "grid2"), left, gaps));
+    var bands = el("div", "bands");
+    (d.bands || []).forEach(function (n, i) {
+      add(bands, add(el("div", "b" + i), el("b", null, num(n)), el("span", "small", names[i] + " (" + (d.bandLo || [])[i] + "+)")));
+    });
+    var hist = el("div", "hist"), hmax = 1;
+    (d.hist || []).forEach(function (n) { hmax = Math.max(hmax, num(n)); });
+    (d.hist || []).forEach(function (n, i) {
+      var c = el("div"), b = el("i");
+      b.style.height = (num(n) * 100 / hmax) + "%";
+      add(hist, add(c, el("span", null, num(n) || ""), b, el("span", "x", i * 10 + (i === 9 ? "+" : ""))));
+    });
+    var crit = add(el("div", "card"), el("h2", null, "Critical controls not in place"));
+    (d.critical || []).forEach(function (c) {
+      add(crit, add(el("div", "r"), el("div", "lab", c.code + " " + c.gap), bar(c.pct, "N"), el("div", "num", num(c.pct) + "%")));
+    });
+    add(crit, el("p", "small muted", "Share of the room answering Not implemented or Unknown."));
+    var side = add(el("div", "card"), el("h2", null, "Strongest controls"));
+    (d.strongest || []).forEach(function (s) {
+      add(side, add(el("div", "r"), el("div", "lab", s.code + " " + s.short), bar(s.pct, "Y"), el("div", "num", num(s.pct) + "%")));
+    });
+    if ((d.sectors || []).length) {
+      add(side, el("h2", null, "By sector (groups of 5 or more)"));
+      d.sectors.forEach(function (s) {
+        add(side, add(el("div", "r"), el("div", "lab", s.name + " (" + s.n + ")"), bar(s.mean, "b" + num(s.band)), el("div", "num", num(s.mean))));
+      });
+    }
+    var mix = d.mix || {};
+    add(side, el("p", "small muted", "All answers: " + num(mix.Y) + "% implemented, " + num(mix.P) + "% partial, " +
+      num(mix.N) + "% not implemented, " + num(mix.U) + "% unknown."));
+    add(root, add(el("div", "cols3"), add(el("div", "card"), el("h2", null, "Participants by overall band"), bands,
+      el("h2", null, "Overall scores"), hist), crit, side));
+  }
+
+  function render(d) {
+    renderProgress(d);
+    renderResults(d);
+    showTab(tab);
+  }
+
+  function poll() {
+    clearTimeout(timer);
+    if (!key) { askKey(); return; }
+    fetch("/api/v1/stats", { headers: { "Authorization": "Bearer " + key }, cache: "no-store", credentials: "omit",
+      referrerPolicy: "no-referrer", redirect: "error" })
+      .then(function (r) {
+        if (r.status === 401) { askKey("That key was not accepted."); return null; }
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(function (d) {
+        if (!d) return;
+        fails = 0; data = d; render(d);
+        status("Live · updated " + new Date(num(d.now) * 1000).toLocaleTimeString());
+        timer = setTimeout(poll, 5000);
+      })
+      .catch(function () {
+        fails++;
+        status("Connection problem, retrying" + (data ? " (showing last data)" : ""), true);
+        timer = setTimeout(poll, Math.min(30000, 5000 * fails));
+      });
+  }
+
+  showTab("prog");
+  poll();
+})();
+</script>
+</body>
+</html>

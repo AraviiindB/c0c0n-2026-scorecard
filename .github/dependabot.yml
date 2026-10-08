@@ -1,10 +1,17 @@
-# Keeps the commit-SHA pins in .github/workflows up to date.
-# A new action version must be at least 7 days old before Dependabot
-# proposes it, which gives time for a compromised release to be caught.
+# Keeps dependencies up to date: the commit-SHA pins in .github/workflows
+# and the hash-pinned Python packages of the session API in api/src.
+# A new version must be at least 7 days old before Dependabot proposes it,
+# which gives time for a compromised release to be caught.
 version: 2
 updates:
   - package-ecosystem: github-actions
     directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7
+  - package-ecosystem: pip
+    directory: /api/src
     schedule:
       interval: weekly
     cooldown:

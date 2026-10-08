@@ -1,0 +1,469 @@
+{
+ "version": "1.3.0",
+ "questions": [
+  {
+   "code": "SD-01",
+   "area": "SD",
+   "weight": 3,
+   "critical": true,
+   "short": "Phishing-resistant MFA on every account that can push, publish, deploy or administer",
+   "gap": "Phishing-resistant MFA for privileged accounts"
+  },
+  {
+   "code": "SD-02",
+   "area": "SD",
+   "weight": 3,
+   "critical": true,
+   "short": "Trusted publishing (OIDC) with no long-lived publish tokens anywhere",
+   "gap": "Trusted publishing (remove long-lived publish tokens)"
+  },
+  {
+   "code": "SD-03",
+   "area": "SD",
+   "weight": 2,
+   "critical": false,
+   "short": "No static cloud keys or long-lived tokens in CI or on developer machines",
+   "gap": "Remove static cloud keys and long-lived tokens"
+  },
+  {
+   "code": "SD-04",
+   "area": "SD",
+   "weight": 2,
+   "critical": false,
+   "short": "Least-privilege CI by default: read-only job tokens, no secrets for forked or outside contributions",
+   "gap": "Least-privilege CI defaults"
+  },
+  {
+   "code": "SD-05",
+   "area": "SD",
+   "weight": 2,
+   "critical": false,
+   "short": "Lockfiles and frozen installs are mandatory in every build",
+   "gap": "Lockfiles and frozen installs"
+  },
+  {
+   "code": "SD-06",
+   "area": "SD",
+   "weight": 3,
+   "critical": true,
+   "short": "Dependency install scripts are disabled by default",
+   "gap": "Disable install scripts by default"
+  },
+  {
+   "code": "SD-07",
+   "area": "SD",
+   "weight": 2,
+   "critical": false,
+   "short": "New dependency versions must age 7 days before they can be used",
+   "gap": "7-day minimum release age for dependencies"
+  },
+  {
+   "code": "SD-08",
+   "area": "SD",
+   "weight": 2,
+   "critical": false,
+   "short": "CI actions and container images are pinned by commit SHA or digest",
+   "gap": "SHA/digest pinning of actions and images"
+  },
+  {
+   "code": "SD-09",
+   "area": "SD",
+   "weight": 2,
+   "critical": false,
+   "short": "Packages, images, apps and extensions are published only from the release pipeline",
+   "gap": "Publish only from the release pipeline"
+  },
+  {
+   "code": "SD-10",
+   "area": "SD",
+   "weight": 1,
+   "critical": false,
+   "short": "AI coding agents and IDE workspace trust run with restrictive defaults",
+   "gap": "AI-agent and workspace-trust policy"
+  },
+  {
+   "code": "PC-01",
+   "area": "PC",
+   "weight": 3,
+   "critical": false,
+   "short": "Branch rulesets with no silent bypass, plus protected tags and immutable releases",
+   "gap": "Branch rulesets and immutable release tags"
+  },
+  {
+   "code": "PC-02",
+   "area": "PC",
+   "weight": 2,
+   "critical": false,
+   "short": "CODEOWNERS approval for workflows, build scripts and AI-agent configuration",
+   "gap": "CODEOWNERS on workflows and build scripts"
+  },
+  {
+   "code": "PC-03",
+   "area": "PC",
+   "weight": 3,
+   "critical": true,
+   "short": "A required workflow linter blocks privileged workflows that run untrusted code, and script injection",
+   "gap": "Workflow linting and dangerous-trigger ban"
+  },
+  {
+   "code": "PC-04",
+   "area": "PC",
+   "weight": 3,
+   "critical": false,
+   "short": "Releases come from an isolated, two-person-approved publish job",
+   "gap": "Isolated, two-person-approved publish job"
+  },
+  {
+   "code": "PC-05",
+   "area": "PC",
+   "weight": 2,
+   "critical": false,
+   "short": "Release runners are ephemeral, registration-controlled, cache-isolated and egress-restricted",
+   "gap": "Runner hardening (ephemeral, cache isolation, egress)"
+  },
+  {
+   "code": "PC-06",
+   "area": "PC",
+   "weight": 3,
+   "critical": true,
+   "short": "A complete, owned inventory of every credential that can reach code, builds, registries or cloud",
+   "gap": "Complete credential inventory"
+  },
+  {
+   "code": "PC-07",
+   "area": "PC",
+   "weight": 2,
+   "critical": false,
+   "short": "Dependencies come through an internal proxy registry that can quarantine versions",
+   "gap": "Proxy registry with quarantine"
+  },
+  {
+   "code": "PC-08",
+   "area": "PC",
+   "weight": 1,
+   "critical": false,
+   "short": "Provenance and signatures are verified before artefacts are used or deployed",
+   "gap": "Provenance and signature verification"
+  },
+  {
+   "code": "PC-09",
+   "area": "PC",
+   "weight": 2,
+   "critical": false,
+   "short": "Developer endpoints are managed, with developer-aware EDR and an extension allow-list",
+   "gap": "Managed developer endpoints and extension allow-list"
+  },
+  {
+   "code": "PC-10",
+   "area": "PC",
+   "weight": 2,
+   "critical": false,
+   "short": "Write access expires automatically, and offboarding revokes tokens, keys and OAuth grants",
+   "gap": "Access expiry and token-driven offboarding"
+  },
+  {
+   "code": "DC-01",
+   "area": "DC",
+   "weight": 3,
+   "critical": true,
+   "short": "We can identify every consumer of a compromised dependency",
+   "gap": "Consumer enumeration"
+  },
+  {
+   "code": "DC-02",
+   "area": "DC",
+   "weight": 3,
+   "critical": true,
+   "short": "Source-control audit events are centrally retained and alerted on",
+   "gap": "SCM audit-log retention and alerting"
+  },
+  {
+   "code": "DC-03",
+   "area": "DC",
+   "weight": 2,
+   "critical": false,
+   "short": "Release-runner telemetry is available to the SOC",
+   "gap": "Runner visibility"
+  },
+  {
+   "code": "DC-04",
+   "area": "DC",
+   "weight": 2,
+   "critical": false,
+   "short": "Developer endpoint telemetry includes install-time detections",
+   "gap": "Developer endpoint detections"
+  },
+  {
+   "code": "DC-05",
+   "area": "DC",
+   "weight": 1,
+   "critical": false,
+   "short": "Registry publishing alerts are configured for everything we publish",
+   "gap": "Registry publish monitoring"
+  },
+  {
+   "code": "DC-06",
+   "area": "DC",
+   "weight": 2,
+   "critical": false,
+   "short": "Threat intel and advisories are matched automatically to our inventory",
+   "gap": "Intel matched to inventory"
+  },
+  {
+   "code": "DC-07",
+   "area": "DC",
+   "weight": 2,
+   "critical": false,
+   "short": "Honeytokens are planted where attackers look",
+   "gap": "Honeytokens (canary credentials)"
+  },
+  {
+   "code": "DC-08",
+   "area": "DC",
+   "weight": 2,
+   "critical": false,
+   "short": "Retired credentials are watched for 90 days after rotation",
+   "gap": "Retired-credential watch"
+  },
+  {
+   "code": "DC-09",
+   "area": "DC",
+   "weight": 1,
+   "critical": false,
+   "short": "Cloud control-plane and exfiltration detections cover build and developer identities",
+   "gap": "Cloud control-plane and exfiltration detections"
+  },
+  {
+   "code": "DC-10",
+   "area": "DC",
+   "weight": 2,
+   "critical": false,
+   "short": "Every supply-chain detection has a named responder, a first action and 24×7 coverage",
+   "gap": "Detection ownership and 24×7 coverage"
+  },
+  {
+   "code": "IR-01",
+   "area": "IR",
+   "weight": 3,
+   "critical": true,
+   "short": "We have a supply-chain-specific incident playbook with an incident commander and RACI",
+   "gap": "Supply-chain incident playbook"
+  },
+  {
+   "code": "IR-02",
+   "area": "IR",
+   "weight": 3,
+   "critical": true,
+   "short": "Credential containment: we can rotate or disable every reachable credential within 24 hours",
+   "gap": "Credential containment procedure"
+  },
+  {
+   "code": "IR-03",
+   "area": "IR",
+   "weight": 2,
+   "critical": false,
+   "short": "Responders snapshot and isolate before revoking, and revoke from a clean machine",
+   "gap": "Snapshot and isolate before revoking"
+  },
+  {
+   "code": "IR-04",
+   "area": "IR",
+   "weight": 2,
+   "critical": false,
+   "short": "We can answer “did we ship it?” within 1 hour",
+   "gap": "“Did we ship it?” check"
+  },
+  {
+   "code": "IR-05",
+   "area": "IR",
+   "weight": 2,
+   "critical": false,
+   "short": "We can freeze all release paths and purge malicious versions from mirrors and caches",
+   "gap": "Release freeze and cache purge"
+  },
+  {
+   "code": "IR-06",
+   "area": "IR",
+   "weight": 1,
+   "critical": false,
+   "short": "Out-of-band communications and private security advisories are ready",
+   "gap": "Out-of-band channel and private advisories"
+  },
+  {
+   "code": "IR-07",
+   "area": "IR",
+   "weight": 2,
+   "critical": false,
+   "short": "Regulatory and contractual notification clocks are pre-mapped with counsel",
+   "gap": "Regulatory notification clocks"
+  },
+  {
+   "code": "IR-08",
+   "area": "IR",
+   "weight": 2,
+   "critical": false,
+   "short": "We can rebuild cleanly and hunt for persistence before declaring recovery",
+   "gap": "Clean rebuild and persistence hunt"
+  },
+  {
+   "code": "IR-09",
+   "area": "IR",
+   "weight": 2,
+   "critical": false,
+   "short": "Supply-chain tabletop exercises run at least twice a year and are timed against targets",
+   "gap": "Timed supply-chain exercises"
+  },
+  {
+   "code": "IR-10",
+   "area": "IR",
+   "weight": 1,
+   "critical": false,
+   "short": "Critical suppliers are contractually bound to notify us, and we hold their security contacts",
+   "gap": "Supplier notification obligations"
+  }
+ ],
+ "areas": [
+  {
+   "code": "SD",
+   "name": "Secure by default",
+   "weight": 30
+  },
+  {
+   "code": "PC",
+   "name": "Preventive controls",
+   "weight": 25
+  },
+  {
+   "code": "DC",
+   "name": "Detective capabilities",
+   "weight": 25
+  },
+  {
+   "code": "IR",
+   "name": "Incident-response readiness",
+   "weight": 20
+  }
+ ],
+ "bands": [
+  {
+   "lo": 0,
+   "name": "Foundational gaps"
+  },
+  {
+   "lo": 40,
+   "name": "Developing"
+  },
+  {
+   "lo": 60,
+   "name": "Established, with gaps"
+  },
+  {
+   "lo": 80,
+   "name": "Strong reported coverage"
+  }
+ ],
+ "profile": {
+  "sector": [
+   "Banking & financial services",
+   "Insurance",
+   "IT services / consulting",
+   "Software product / SaaS",
+   "Telecom",
+   "Government / public sector",
+   "Healthcare / pharma",
+   "Manufacturing / energy / utilities",
+   "Other"
+  ],
+  "size": [
+   "Under 500 employees",
+   "500–5,000",
+   "5,000–50,000",
+   "Over 50,000"
+  ],
+  "role": [
+   "CISO / head of security",
+   "Security leadership (deputy CISO, SOC or IR head)",
+   "Engineering / platform leadership",
+   "Risk, compliance or audit",
+   "Other"
+  ]
+ },
+ "scenarios": [
+  {
+   "id": "S1",
+   "title": "The poisoned package",
+   "codes": [
+    "DC-10",
+    "DC-06",
+    "DC-01",
+    "PC-07",
+    "SD-07",
+    "SD-05",
+    "SD-06"
+   ]
+  },
+  {
+   "id": "S2",
+   "title": "A trusted CI tool turns on you",
+   "codes": [
+    "SD-08",
+    "PC-08",
+    "SD-04",
+    "PC-03",
+    "PC-05",
+    "DC-03",
+    "IR-04"
+   ]
+  },
+  {
+   "id": "S3",
+   "title": "The developer laptop",
+   "codes": [
+    "PC-09",
+    "DC-04",
+    "SD-03",
+    "SD-10",
+    "DC-07",
+    "DC-09"
+   ]
+  },
+  {
+   "id": "S4",
+   "title": "They publish as you",
+   "codes": [
+    "SD-01",
+    "SD-02",
+    "SD-09",
+    "PC-04",
+    "PC-01",
+    "PC-02",
+    "DC-02",
+    "DC-05"
+   ]
+  },
+  {
+   "id": "S5",
+   "title": "Containment: the credential race",
+   "codes": [
+    "IR-01",
+    "PC-06",
+    "IR-03",
+    "IR-02",
+    "PC-10",
+    "DC-08",
+    "IR-05"
+   ]
+  },
+  {
+   "id": "S6",
+   "title": "Recovery and the outside world",
+   "codes": [
+    "IR-06",
+    "IR-07",
+    "IR-10",
+    "IR-08",
+    "IR-09"
+   ]
+  }
+ ]
+}
