@@ -1,12 +1,14 @@
 # Publishes the page that is live on main as an immutable GitHub release.
 #
 # 1. Checks that index.html matches the version and SHA-256 recorded in
-#    sbom.cdx.json, and that GitHub Pages is serving exactly this file.
-# 2. Creates Sigstore-signed build-provenance and SBOM attestations for
-#    index.html (keyless signing; the signing identity is this workflow).
-# 3. Publishes index.html, sbom.cdx.json, SHA256SUMS.txt and the two
-#    attestation bundles as an immutable release. GitHub adds its own signed
-#    release attestation.
+#    sbom.cdx.json, and that GitHub Pages is serving exactly this file and
+#    the PDFs in downloads/.
+# 2. Creates Sigstore-signed attestations (keyless signing; the signing
+#    identity is this workflow): build provenance for index.html and the
+#    PDFs, and the SBOM for index.html.
+# 3. Publishes index.html, the PDFs, sbom.cdx.json, SHA256SUMS.txt and the
+#    two attestation bundles as an immutable release. GitHub adds its own
+#    signed release attestation.
 # 4. Sends the SBOM's npm components to the dependency graph, so Dependabot
 #    alerts also cover the libraries bundled inside index.html.
 #
@@ -81,13 +83,35 @@ jobs:
           fi
           mkdir out
           cp index.html sbom.cdx.json out/
-          (cd out && sha256sum index.html sbom.cdx.json > SHA256SUMS.txt)
+          shopt -s nullglob
+          pdfs=(downloads/*.pdf)
+          if [[ "${#pdfs[@]}" -ne 2 ]]; then
+            echo "::error::Expected the 2 PDFs in downloads/, found ${#pdfs[@]}"
+            exit 1
+          fi
+          for pdf in "${pdfs[@]}"; do
+            name="$(basename "$pdf")"
+            if [[ ! "$name" =~ ^[A-Za-z0-9-]+\.pdf$ ]]; then
+              echo "::error::Unexpected file name downloads/$name"
+              exit 1
+            fi
+            sum="$(sha256sum "$pdf" | cut -d ' ' -f 1)"
+            live="$(curl -fsSL --proto '=https' --tlsv1.2 "${SITE}downloads/${name}?release-check=${GITHUB_RUN_ID}" | sha256sum | cut -d ' ' -f 1)"
+            if [[ "$live" != "$sum" ]]; then
+              echo "::error::GitHub Pages is not serving this downloads/$name yet. Wait for the Pages deployment, then run again."
+              exit 1
+            fi
+            cp "$pdf" out/
+          done
+          (cd out && sha256sum index.html sbom.cdx.json *.pdf > SHA256SUMS.txt)
 
       - name: Attest build provenance
         id: provenance
         uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
         with:
-          subject-path: out/index.html
+          subject-path: |
+            out/index.html
+            out/*.pdf
 
       - name: Attest SBOM
         id: sbom
@@ -103,7 +127,7 @@ jobs:
           SBOM_BUNDLE: ${{ steps.sbom.outputs.bundle-path }}
         run: |
           set -euo pipefail
-          cp "$PROVENANCE_BUNDLE" out/index.html.provenance.sigstore.json
+          cp "$PROVENANCE_BUNDLE" out/provenance.sigstore.json
           cp "$SBOM_BUNDLE" out/index.html.sbom.sigstore.json
           cat > out/notes.md << EOF
           Immutable release of the page served at $SITE
@@ -114,12 +138,14 @@ jobs:
               gh release verify-asset v$VERSION index.html -R $GH_REPO
               gh attestation verify index.html -R $GH_REPO
 
-          Assets: index.html (the page), sbom.cdx.json (CycloneDX SBOM with VEX), SHA256SUMS.txt, and the Sigstore bundles of the build-provenance and SBOM attestations for index.html. SECURITY.md explains these checks.
+          The same two gh commands work for the book and IR toolkit PDFs served from ${SITE}downloads/ (use the PDF's file name instead of index.html).
+
+          Assets: index.html (the page), the two PDFs offered on its results page, sbom.cdx.json (CycloneDX SBOM with VEX), SHA256SUMS.txt, the Sigstore bundle of the build-provenance attestation (index.html and the PDFs) and the Sigstore bundle of the SBOM attestation for index.html. SECURITY.md explains these checks.
           EOF
           gh release create "v$VERSION" --draft --target "$GITHUB_SHA" --title "v$VERSION" \
             --notes-file out/notes.md \
-            out/index.html out/sbom.cdx.json out/SHA256SUMS.txt \
-            out/index.html.provenance.sigstore.json out/index.html.sbom.sigstore.json
+            out/index.html out/*.pdf out/sbom.cdx.json out/SHA256SUMS.txt \
+            out/provenance.sigstore.json out/index.html.sbom.sigstore.json
           gh release edit "v$VERSION" --draft=false
 
       - name: Verify the release and attestations
@@ -142,6 +168,10 @@ jobs:
           gh attestation verify out/index.html --repo "$GH_REPO" --signer-workflow "$signer"
           gh attestation verify out/index.html --repo "$GH_REPO" --signer-workflow "$signer" \
             --predicate-type https://cyclonedx.org/bom
+          for pdf in out/*.pdf; do
+            gh release verify-asset "v$VERSION" "$pdf"
+            gh attestation verify "$pdf" --repo "$GH_REPO" --signer-workflow "$signer"
+          done
 
       - name: Send the SBOM components to the dependency graph
         env:

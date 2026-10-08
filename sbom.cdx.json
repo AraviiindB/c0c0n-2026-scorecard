@@ -2,18 +2,18 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:18a390c7-8eae-50a3-aea8-d846504d4405",
+  "serialNumber": "urn:uuid:a227c2cd-1bc8-5950-8a3f-55563e99986c",
   "metadata": {
     "component": {
       "type": "application",
-      "bom-ref": "pkg:github/AraviiindB/c0c0n-2026-scorecard@1.3.0",
+      "bom-ref": "pkg:github/AraviiindB/c0c0n-2026-scorecard@1.4.0",
       "name": "c0c0n-2026-scorecard",
-      "version": "1.3.0",
-      "description": "Single-file supply-chain incident readiness scorecard (index.html)",
+      "version": "1.4.0",
+      "description": "Single-file software supply chain security posture scorecard (index.html)",
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "f503c3fa5e5eb3567afc93757438b234cf332b40c96092576f5073dcce792fb0"
+          "content": "9be0ba4fb44a1f24ce14f234dd4628cefbd3a2d586c0426d660998103d5d386c"
         }
       ],
       "externalReferences": [
@@ -32,7 +32,7 @@
         {
           "type": "application",
           "name": "build_app.py",
-          "version": "1.3.0"
+          "version": "1.4.0"
         }
       ]
     }
@@ -347,7 +347,7 @@
   ],
   "dependencies": [
     {
-      "ref": "pkg:github/AraviiindB/c0c0n-2026-scorecard@1.3.0",
+      "ref": "pkg:github/AraviiindB/c0c0n-2026-scorecard@1.4.0",
       "dependsOn": [
         "pkg:npm/jspdf@4.2.1",
         "pkg:npm/jspdf-autotable@5.0.8"

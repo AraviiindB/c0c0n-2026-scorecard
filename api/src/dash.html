@@ -37,8 +37,12 @@ h2 { margin: 0 0 .5em; font-size: 1.05em; color: var(--navy); text-transform: up
 .tile.hl .v { color: var(--y); }
 .rows { display: grid; gap: .45em; }
 .r { display: grid; grid-template-columns: minmax(10em, 22em) 1fr 3.2em; gap: .8em; align-items: center; }
-.r .lab { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.r .num { text-align: right; font-weight: 800; font-size: 1.15em; color: var(--navy); }
+.r .lab { font-weight: 600; overflow-wrap: anywhere; }
+.r.sec { grid-template-columns: minmax(0, 1.6fr) minmax(3em, 1fr) 2.6em; gap: .6em; }
+.r .num, .li .num { text-align: right; font-weight: 800; font-size: 1.15em; color: var(--navy); }
+.li { display: grid; grid-template-columns: 1fr 3.2em; gap: .25em .8em; align-items: center; margin: 0 0 .75em; }
+.li .lab { grid-column: 1 / -1; font-weight: 600; line-height: 1.3; overflow-wrap: anywhere; }
+.li .lab .c { font-weight: 800; color: var(--navy2); margin-right: .35em; }
 .bar { height: 1.15em; background: #e8edf5; border-radius: 999px; overflow: hidden; display: flex; }
 .bar i { display: block; height: 100%; background: var(--navy2); }
 .bar i.done { background: var(--y); }
@@ -234,19 +238,21 @@ h2 { margin: 0 0 .5em; font-size: 1.05em; color: var(--navy); text-transform: up
       b.style.height = (num(n) * 100 / hmax) + "%";
       add(hist, add(c, el("span", null, num(n) || ""), b, el("span", "x", i * 10 + (i === 9 ? "+" : ""))));
     });
+    // Label on its own full-width line (wrapping, never cut short), bar and value underneath.
+    function item(code, text, pct, cls, value) {
+      var lab = add(el("div", "lab"), code ? el("span", "c", code) : null, document.createTextNode(String(text || "")));
+      return add(el("div", "li"), lab, bar(pct, cls), el("div", "num", value));
+    }
     var crit = add(el("div", "card"), el("h2", null, "Critical controls not in place"));
-    (d.critical || []).forEach(function (c) {
-      add(crit, add(el("div", "r"), el("div", "lab", c.code + " " + c.gap), bar(c.pct, "N"), el("div", "num", num(c.pct) + "%")));
-    });
+    (d.critical || []).forEach(function (c) { add(crit, item(c.code, c.gap, c.pct, "N", num(c.pct) + "%")); });
     add(crit, el("p", "small muted", "Share of the room answering Not implemented or Unknown."));
     var side = add(el("div", "card"), el("h2", null, "Strongest controls"));
-    (d.strongest || []).forEach(function (s) {
-      add(side, add(el("div", "r"), el("div", "lab", s.code + " " + s.short), bar(s.pct, "Y"), el("div", "num", num(s.pct) + "%")));
-    });
+    (d.strongest || []).forEach(function (s) { add(side, item(s.code, s.short, s.pct, "Y", num(s.pct) + "%")); });
     if ((d.sectors || []).length) {
       add(side, el("h2", null, "By sector (groups of 5 or more)"));
       d.sectors.forEach(function (s) {
-        add(side, add(el("div", "r"), el("div", "lab", s.name + " (" + s.n + ")"), bar(s.mean, "b" + num(s.band)), el("div", "num", num(s.mean))));
+        add(side, add(el("div", "r sec"), el("div", "lab", s.name + " (" + num(s.n) + ")"), bar(s.mean, "b" + num(s.band)),
+          el("div", "num", num(s.mean))));
       });
     }
     var mix = d.mix || {};

@@ -6,12 +6,13 @@ Please report security problems **privately** through GitHub private vulnerabili
 [Report a vulnerability](https://github.com/AraviiindB/c0c0n-2026-scorecard/security/advisories/new) (Security tab → *Report a vulnerability*).
 Please do not post security problems in public. We aim to acknowledge reports within 3 working days and will credit reporters who want to be named.
 
-**In scope:** the web app at <https://araviiindb.github.io/c0c0n-2026-scorecard/> (`index.html` in this repository), the session API at <https://func-c0c0n26-8ug1oc.azurewebsites.net/api/> (source in [`api/`](api/)) and the configuration of this repository.
+**In scope:** the web app at <https://araviiindb.github.io/c0c0n-2026-scorecard/> (`index.html` and the two PDFs in [`downloads/`](downloads/) in this repository), the session API at <https://func-c0c0n26-8ug1oc.azurewebsites.net/api/> (source in [`api/`](api/)) and the configuration of this repository.
 **Out of scope:** the Microsoft Forms, Microsoft 365/OneDrive and GitHub/GitHub Pages platforms themselves (report those to Microsoft or GitHub), volumetric denial of service, social engineering, and anything that needs an already-compromised device or browser.
 
 ## Security design
 
-- **Calculated on the device; no accounts, no tracking.** The app is one static HTML file. Scoring and the PDF report run entirely on the participant's device. The only requests the page makes go to the workshop's session API (see [Session API](#session-api)). There are no cookies, analytics, fonts, CDNs or other third-party requests.
+- **Calculated on the device; no accounts, no tracking.** The app is one static HTML file. Scoring and the PDF report run entirely on the participant's device. The only requests the page makes go to the workshop's session API (see [Session API](#session-api)), apart from the two PDFs a participant can choose to download from this same site. There are no cookies, analytics, fonts, CDNs or other third-party requests.
+- **Static, checked downloads.** The results page links to the speakers' book *Breaking the Chain* and the *Software Supply Chain IR Toolkit*, two PDFs in [`downloads/`](downloads/). The links are relative, so every copy of the site serves its own files. The build fails unless each file matches its pinned SHA-256 and is a plain document: no JavaScript, no automatic or launch actions, no links into other files, no forms, multimedia or embedded files, no encryption, and every web link is `https://`. Each release publishes and attests the two PDFs with `index.html` (see [Verifying the page](#verifying-the-page)).
 - **Strict Content-Security-Policy** (meta tag): `default-src 'none'`. Every script and style block is allowed only by its SHA-256 hash: there is no `'unsafe-inline'`, no `'unsafe-eval'` and no inline `style` attribute. `connect-src` allows only the session API origin (`https://func-c0c0n26-8ug1oc.azurewebsites.net`), so fetch, XHR, WebSocket, EventSource, beacon and ping requests to anywhere else are blocked, and `form-action 'none'` blocks form submissions. `img-src` allows only `data:` images. `base-uri 'none'`, `object-src 'none'`, `frame-src 'none'` and `worker-src 'none'` are also set. A CSP cannot close every channel: WebRTC, page navigation and new windows, for example, are outside it. It limits what injected code could do, but the main protection is that only the hash-pinned scripts can run, and the libraries among them are verified at build time (see below).
 - **Trusted Types** (`require-trusted-types-for 'script'`) are enforced in browsers that support them. The only HTML sink is a single named policy, and every dynamic value passes through an HTML-escaping function before it reaches it. Browsers without Trusted Types still get the same escaping and the hash-only CSP.
 - **Untrusted input is escaped and validated.** Everything typed by the participant, or read back from local storage, is HTML-escaped before it is shown. It is also checked against allow-lists (control codes, rating values, profile options) and length-limited. Lookup tables have no prototype, so crafted keys cannot reach built-in properties.
@@ -37,13 +38,16 @@ The session API is a small Azure Functions app (Python 3.12) in its own Azure re
 
 ## Verifying the page
 
-From v1.1.1, each version of the page is published as an immutable [GitHub release](https://github.com/AraviiindB/c0c0n-2026-scorecard/releases). Before anything is signed, the release workflow checks that `index.html` matches the SHA-256 recorded in `sbom.cdx.json` and is the file GitHub Pages is serving. It then creates Sigstore-signed build-provenance and SBOM attestations for `index.html`, and GitHub adds its own signed release attestation. To check the page you were served, use a recent [GitHub CLI](https://cli.github.com/):
+From v1.1.1, each version of the page is published as an immutable [GitHub release](https://github.com/AraviiindB/c0c0n-2026-scorecard/releases). Before anything is signed, the release workflow checks that `index.html` matches the SHA-256 recorded in `sbom.cdx.json` and that GitHub Pages is serving exactly this `index.html` and, from v1.4.0, the two PDFs in `downloads/`. It then creates a Sigstore-signed build-provenance attestation covering `index.html` and the two PDFs, and an SBOM attestation for `index.html`. GitHub adds its own signed release attestation. To check the page you were served, use a recent [GitHub CLI](https://cli.github.com/):
 
     curl -fsSL -o index.html https://araviiindb.github.io/c0c0n-2026-scorecard/
     gh release verify-asset index.html -R AraviiindB/c0c0n-2026-scorecard
     gh attestation verify index.html -R AraviiindB/c0c0n-2026-scorecard --signer-workflow AraviiindB/c0c0n-2026-scorecard/.github/workflows/release.yml
 
-Without the GitHub CLI, compare the SHA-256 of the downloaded file (`sha256sum index.html`, or `Get-FileHash index.html` in PowerShell) with `SHA256SUMS.txt` in the latest release.
+The same two `gh` commands work for a downloaded PDF; replace `index.html` with its file name. Without the GitHub CLI, compare the SHA-256 of the downloaded file (`sha256sum index.html`, or `Get-FileHash index.html` in PowerShell) with `SHA256SUMS.txt` in the latest release. The PDFs of v1.4.0 have these SHA-256 values:
+
+    39b19405d8a3599a4b61179b6e2d685975f98ff21e1523ff54b02c7c71105489  Breaking-the-Chain-October-2026.pdf
+    c240fc0ec4749ada61a060210f9b88818a0ed3dcc331ff53ac70b060c5bc3477  Software-Supply-Chain-IR-Toolkit.pdf
 
 The page is built on the maintainer's machine and then committed to this repository. The attestations therefore prove that this repository's release workflow published this exact file; they do not prove how it was built. The build checks are described under *Pinned, verified dependencies* above.
 

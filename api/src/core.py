@@ -234,7 +234,7 @@ def aggregate(subs, progs, now):
                        "critical": p["q"]["critical"], "pct": {L: _pct(p["c"][L], n) for L in "YPNU"}} for p in top]
     crit = sorted((p for p in per if p["q"]["critical"]), key=lambda p: (-(p["c"]["N"] + p["c"]["U"]), p["i"]))
     res["critical"] = [{"code": p["q"]["code"], "gap": p["q"]["gap"], "pct": _pct(p["c"]["N"] + p["c"]["U"], n)}
-                       for p in crit[:5]]
+                       for p in crit[:3]]
     best = sorted(per, key=lambda p: (-p["c"]["Y"], p["i"]))[:3]
     res["strongest"] = [{"code": p["q"]["code"], "short": p["q"]["short"], "pct": _pct(p["c"]["Y"], n)} for p in best]
     groups = {}

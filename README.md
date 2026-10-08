@@ -1,6 +1,6 @@
-# c0c0n 2026 · Supply-chain incident readiness scorecard
+# c0c0n 2026 · Software supply chain security posture scorecard
 
-Participant self-assessment for the c0c0n 2026 CISO working session **"Anatomy of a Software Supply Chain Incident"** (detection, response and recovery).
+Participant self-assessment for the c0c0n 2026 CISO working session **"Anatomy of a Software Supply Chain Incident"** (detection, response and recovery), by Vinothkumar R and Aravind Baskaran.
 
 - **Start:** https://araviiindb.github.io/c0c0n-2026-scorecard/
 - **Sample report:** https://araviiindb.github.io/c0c0n-2026-scorecard/?demo=1#report
@@ -13,6 +13,7 @@ Participant self-assessment for the c0c0n 2026 CISO working session **"Anatomy o
 - Shows area and overall scores out of 100, interpretation bands, critical gaps, uncertainty, the lowest-scoring area and a priority action plan.
 - Builds a detailed PDF report **on the participant's device**. It contains the scores, findings, recommendations, suggested owners, roadmap timeframes, an action plan, the incident scenarios, and every question as asked with the participant's answer, grouped by area.
 - Submits the ratings to the **room dashboard automatically** when the participant finishes the last scenario, so the facilitators can show the room's combined results, and shows the facilitators how many people are on each step.
+- Offers the speakers' book **Breaking the Chain** and the **Software Supply Chain IR Toolkit** as PDF downloads at the end of the results page. Both are static files served from this same site ([`downloads/`](downloads/)).
 
 ## Privacy
 
@@ -31,4 +32,4 @@ Participant self-assessment for the c0c0n 2026 CISO working session **"Anatomy o
 
 The results are self-reported and are not an audit or certification. Controls, recommendations and timeframes draw on the "Breaking the Chain" research.
 
-The app is a single static page. It bundles jsPDF and jsPDF-AutoTable (both MIT). jsPDF in turn compiles in the npm packages fflate, fast-png and iobuffer (MIT) and pako (MIT and Zlib), plus a few smaller embedded components. See `THIRD-PARTY-NOTICES.md` for the licences and `sbom.cdx.json` for the CycloneDX software bill of materials, which includes the vulnerability (VEX) assessment. The source of the session API is in [`api/`](api/). Security design and vulnerability reporting are described in `SECURITY.md`, which also shows how to check that the page you were served is the signed, released build.
+The app is a single static page, plus the two PDFs in `downloads/`. It bundles jsPDF and jsPDF-AutoTable (both MIT). jsPDF in turn compiles in the npm packages fflate, fast-png and iobuffer (MIT) and pako (MIT and Zlib), plus a few smaller embedded components. See `THIRD-PARTY-NOTICES.md` for the licences and `sbom.cdx.json` for the CycloneDX software bill of materials, which includes the vulnerability (VEX) assessment. The source of the session API is in [`api/`](api/). Security design and vulnerability reporting are described in `SECURITY.md`, which also shows how to check that the page you were served is the signed, released build.
