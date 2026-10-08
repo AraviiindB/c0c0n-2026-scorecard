@@ -210,7 +210,8 @@ def aggregate(subs, progs, now):
         return res
     sc = [score(x["ans"]) for x in use]
     ov = [s["overall"] for s in sc]
-    res["overall"] = {"mean": rhu(sum(ov), n), "median": statistics.median(ov), "min": min(ov), "max": max(ov)}
+    # No minimum or maximum: with few participants either one would expose a single person's exact score.
+    res["overall"] = {"mean": rhu(sum(ov), n), "median": statistics.median(ov)}
     res["band"] = band_index(res["overall"]["mean"])
     res["bands"] = [sum(1 for s in sc if s["band"] == k) for k in range(len(BANDS))]
     res["hist"] = [sum(1 for v in ov if min(v // 10, 9) == k) for k in range(10)]

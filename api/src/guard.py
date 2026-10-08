@@ -58,7 +58,8 @@ class Limits:
     """Sized for a conference room behind one NAT address (300 devices) with headroom."""
 
     def __init__(self):
-        self.glob = Limiter(6000)            # all requests to this instance
+        self.glob = Limiter(6000)            # accepted progress and submissions on this instance; above the
+                                             # per-address total (2100), so one address cannot exhaust it
         self.ip_progress = Limiter(1500)
         self.ip_submit = Limiter(600)
         self.sid_progress = Limiter(60)

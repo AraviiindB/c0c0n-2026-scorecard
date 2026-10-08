@@ -156,6 +156,49 @@ class Intake(unittest.TestCase):
         self.assertEqual(len(store.subs), 300)
         self.assertEqual(len(relay.posts), 300)
 
+    def test_instance_limit_counts_only_accepted_intake(self):
+        svc, store, _, _ = make()
+        svc.limits.glob = guard.Limiter(3)
+        key = {"Authorization": "Bearer " + KEY, "X-Forwarded-For": "198.51.100.1"}
+        for _ in range(50):  # cheap anonymous or refused requests never use the shared budget
+            self.assertEqual(svc.handle("health", "GET", {}, b"")[0], 200)
+            self.assertEqual(svc.handle("dash", "GET", {}, b"")[0], 200)
+            self.assertEqual(svc.handle("submit", "POST", hdrs(), b"{}")[0], 400)
+            self.assertEqual(svc.handle("submit", "POST", hdrs(origin="https://evil.example"), body(sub()))[0], 403)
+        for i in range(3):
+            st = svc.handle("progress", "POST", hdrs(xff="198.51.100.%d" % (i + 10)),
+                            body({"sid": "%032x" % (i + 1), "s": 1}))[0]
+            self.assertEqual(st, 204)
+        st, h, _ = svc.handle("progress", "POST", hdrs(xff="198.51.100.99"), body({"sid": "%032x" % 99, "s": 1}))
+        self.assertEqual(st, 429)
+        self.assertEqual(h["Access-Control-Allow-Origin"], ORIGIN)
+        self.assertTrue(1 <= int(h["Retry-After"]) <= 60)
+        self.assertEqual(len(store.prog), 3)
+        self.assertEqual(svc.handle("health", "GET", {}, b"")[0], 200)
+        self.assertEqual(svc.handle("stats", "GET", key, b"")[0], 200)
+
+    def test_junk_from_the_room_address_does_not_use_its_allowance(self):
+        svc, store, _, _ = make()
+        svc.limits.ip_submit = guard.Limiter(2)
+        for bad in (b"{}", b"x" * 2000, body(sub(ans="Y")), body(dict(sub(), extra=1)), b"[]"):
+            for _ in range(20):
+                self.assertEqual(svc.handle("submit", "POST", hdrs(), bad)[0], 400)
+        for _ in range(20):
+            self.assertEqual(svc.handle("submit", "POST", hdrs(ct="application/xml"), body(sub()))[0], 415)
+        for i in range(2):
+            self.assertEqual(svc.handle("submit", "POST", hdrs(), body(sub(sid="%032x" % (i + 1))))[0], 200)
+        self.assertEqual(svc.handle("submit", "POST", hdrs(), body(sub(sid="%032x" % 3)))[0], 429)
+        self.assertEqual(len(store.subs), 2)
+
+    def test_one_looping_device_cannot_use_the_room_allowance(self):
+        svc, *_ = make()
+        svc.limits.ip_progress = guard.Limiter(100)
+        codes = [svc.handle("progress", "POST", hdrs(), body({"sid": SID, "s": 1}))[0] for _ in range(500)]
+        self.assertEqual((codes.count(204), codes.count(429)), (60, 440))
+        for i in range(40):  # only the 60 accepted requests were charged to the shared address
+            self.assertEqual(svc.handle("progress", "POST", hdrs(), body({"sid": "%032x" % (i + 1), "s": 1}))[0], 204)
+        self.assertEqual(svc.handle("progress", "POST", hdrs(), body({"sid": "%032x" % 41, "s": 1}))[0], 429)
+
     def test_ip_limit_uses_last_forwarded_entry(self):
         svc, *_ = make()
         for i in range(600):
@@ -337,6 +380,7 @@ class Stats(unittest.TestCase):
         self.assertEqual((d["progress"]["completed"], d["progress"]["inProgress"], d["progress"]["devices"]),
                          (5, 1, 6))
         self.assertEqual(d["overall"]["mean"], 100)
+        self.assertEqual(set(d["overall"]), {"mean", "median"})  # no exact minimum or maximum of one person
         text = b.decode()
         for secret in ("203.0.113.7", "K7M", "P10", "000000000000000000000001"):
             self.assertNotIn(secret, text)  # no IPs, participant codes or device ids leave the API

@@ -207,8 +207,8 @@ h2 { margin: 0 0 .5em; font-size: 1.05em; color: var(--navy); text-transform: up
     var o = d.overall || {};
     var left = add(el("div", "card"), el("h2", null, "Room readiness, " + num(d.n) + " participants"),
       add(el("div", "big"), el("span", "v", num(o.mean)), el("span", "o", "/ 100"), pill(num(d.band), names)),
-      el("p", "small muted", "Average of participants' overall scores. Median " + o.median + ", range " + num(o.min) +
-        " to " + num(o.max) + ". Average uncertainty " + num(d.unc) + "% of control weight."));
+      el("p", "small muted", "Average of participants' overall scores. Median " + num(o.median) +
+        ". Average uncertainty " + num(d.unc) + "% of control weight."));
     (d.areas || []).forEach(function (a) {
       add(left, add(el("div", "area"), add(el("div", "lab"), el("b", null, a.name), el("span", null, a.weight + "% of overall")),
         bar(a.mean, "b" + num(a.band)), el("div", "num", num(a.mean)), add(el("div"), pill(num(a.band), names))));

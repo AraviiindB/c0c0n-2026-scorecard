@@ -16,7 +16,7 @@ import guard
 from relay import RelayError
 from store import Conflict, StoreError
 
-LEASE_S = 90
+LEASE_S = 150  # longer than the slowest possible relay attempt (about 100 s of socket timeouts)
 MAX_TRIES = 20
 SCAN_CAP = 20000
 STATS_TTL = 5
@@ -95,8 +95,6 @@ class Service:
     def handle(self, route, method, headers, body):
         now = self.clock()
         h = {str(k).lower(): str(v) for k, v in (headers or {}).items()}
-        if not self.limits.glob.hit("all", now):
-            return self._err(429, "rate_limited", {"Retry-After": str(self.limits.glob.retry_after(now))})
         try:
             if route in ("progress", "submit"):
                 return self._intake(route, method, h, body, now)
@@ -135,10 +133,6 @@ class Service:
             return self._err(415, "unsupported_media_type", cors)
         if not self._open(now):
             return self._err(403, "closed", cors)
-        ipk = guard.client_key(h)
-        lim_ip = self.limits.ip_progress if route == "progress" else self.limits.ip_submit
-        if not lim_ip.hit(ipk, now):
-            return self._err(429, "rate_limited", dict(cors, **{"Retry-After": str(lim_ip.retry_after(now))}))
         try:
             if route == "progress":
                 sid, stage = core.parse_progress(body)
@@ -147,9 +141,16 @@ class Service:
                 sid = sub["sid"]
         except core.Invalid:
             return self._err(400, "bad_request", cors)
-        lim_sid = self.limits.sid_progress if route == "progress" else self.limits.sid_submit
-        if not lim_sid.hit(sid, now):
-            return self._err(429, "rate_limited", dict(cors, **{"Retry-After": str(lim_sid.retry_after(now))}))
+        # Refused requests above use no budget, so junk sent from a shared address (the venue's NAT) cannot use
+        # up the room's allowance. Valid ones count per device, then per address, and last against the
+        # instance-wide limit that protects storage and the Forms relay, which one address alone cannot reach.
+        if route == "progress":
+            limits = ((self.limits.sid_progress, sid), (self.limits.ip_progress, guard.client_key(h)))
+        else:
+            limits = ((self.limits.sid_submit, sid), (self.limits.ip_submit, guard.client_key(h)))
+        for lim, k in limits + ((self.limits.glob, "all"),):
+            if not lim.hit(k, now):
+                return self._err(429, "rate_limited", dict(cors, **{"Retry-After": str(lim.retry_after(now))}))
         if route == "progress":
             self.store.put_progress(sid, stage, now)
             return 204, dict(guard.SEC_COMMON, **cors), b""

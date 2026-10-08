@@ -150,7 +150,7 @@ class Aggregate(unittest.TestCase):
         subs = [row(i) for i in range(4)] + [row(9, ans="N" * core.NQ)]
         r = core.aggregate(subs, [], 1000)
         self.assertEqual(r["n"], 5)
-        self.assertEqual(r["overall"], {"mean": 80, "median": 100, "min": 0, "max": 100})
+        self.assertEqual(r["overall"], {"mean": 80, "median": 100})  # no min/max: they would expose one person
         self.assertEqual(r["bands"], [1, 0, 0, 4])
         self.assertEqual(sum(r["hist"]), 5)
         self.assertEqual((r["hist"][0], r["hist"][9]), (1, 4))
