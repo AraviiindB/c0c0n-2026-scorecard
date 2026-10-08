@@ -1,7 +1,8 @@
 # Runtime dependencies of the results API, pinned by version and SHA-256 (pip hash-checking mode).
 # build_api.py downloads exactly these wheels for Linux x86_64 / CPython 3.12 and vendors them into the zip.
-azure-functions==1.25.0 \
-    --hash=sha256:0d01e52c0871a01a65911bc163a0dfd7f09725ba43cea17a09909cc5d298c1d2
+azure-functions==2.3.0 \
+    --hash=sha256:32136bae3285680edd2b2d1786c37d381a9ba4c23332dcd590e354190dbe6c9a \
+    --hash=sha256:9eb166cd83875dd88996c5f23a46f8edbbc78c0f9c41926bfdf960be54b6c889
 werkzeug==3.1.9 \
     --hash=sha256:6392e50c78460ba618e5b21f08a71f59c99ce99cdc6cf6e3dd7e6ccca8754fab
 markupsafe==3.0.4 \
